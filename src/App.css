@@ -27,6 +27,14 @@
 .App-link {
   color: #61dafb;
 }
+.App-header h1 {
+  color: aqua;
+}
+
+
+.App h1 {
+  text-align: justify;
+}
 
 @keyframes App-logo-spin {
   from {
