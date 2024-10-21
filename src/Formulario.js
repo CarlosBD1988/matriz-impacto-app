@@ -65,6 +65,11 @@ function Formulario() {
   const [impactoTotal, setImpactoTotal] = useState(0);
   const [esfuerzoTotal, setEsfuerzoTotal] = useState(0);
 
+  // Estado para la idea de desarrollo innovadora
+  // Función que se ejecuta cuando el usuario selecciona una opción
+  const [idea, setIdea] = useState('');
+
+
   // Función que se ejecuta cuando el usuario selecciona una opción
   const handleSelect = (preguntaId, opcionSeleccionada) => {
     const seleccionAnterior = selecciones[preguntaId];
@@ -86,18 +91,54 @@ function Formulario() {
     setEsfuerzoTotal((prev) => prev + opcionSeleccionada.esfuerzo);
   };
 
+  const calcularMaximos = () => {
+    // Función para limpiar las respuestas
+        let maxImpacto = 0;
+        let maxEsfuerzo = 0;
+        preguntas.forEach(pregunta => {
+          const maxOpcion = Math.max(...pregunta.opciones.map(opcion => opcion.impacto));
+          const maxEsfuerzoOpcion = Math.max(...pregunta.opciones.map(opcion => opcion.esfuerzo));
+          maxImpacto += maxOpcion;
+          maxEsfuerzo += maxEsfuerzoOpcion;
+        });
+        return { maxImpacto, maxEsfuerzo };
+      };
+      const { maxImpacto, maxEsfuerzo } = calcularMaximos();
+      const porcentajeImpacto = ((impactoTotal / maxImpacto) * 100).toFixed(2);
+      const porcentajeEsfuerzo = ((esfuerzoTotal / maxEsfuerzo) * 100).toFixed(2);
+
+
+
+
+
+  
 // Función para limpiar las respuestas
 const handleReset = () => {
     setSelecciones({});
     setImpactoTotal(0);
     setEsfuerzoTotal(0);
+    setIdea(''); // Limpiar la idea también
   };
 
 
   return (
     <div>      
       <h2>Formulario de Evaluación de Idea de Negocio</h2>
-      <form>      
+      <form>  
+
+        {/* Campo de texto para la idea de desarrollo innovadora */}
+       <div>
+          <label htmlFor="idea">Idea de desarrollo innovadora:</label>
+          <textarea
+            id="idea"
+            className="textarea-idea"
+            value={idea}
+            onChange={(e) => setIdea(e.target.value)}
+            placeholder="Escribe tu idea aquí..."
+          />
+        </div>
+
+
       {/* Mapeamos sobre el arreglo de preguntas para renderizarlas */}
       {preguntas.map((pregunta) => (
         <div key={pregunta.id}>
@@ -116,7 +157,8 @@ const handleReset = () => {
             </div>
           ))}
         </div>
-      ))}
+      ))}    
+
 
         {/* Botón para limpiar las respuestas */}
         <button type="button" onClick={handleReset}>Limpiar Respuestas</button>
@@ -125,8 +167,8 @@ const handleReset = () => {
       {/* Mostrar resultados */}
       <div className="resultados">
         <h3>Resultados Totales:</h3>
-        <p>Impacto Total: {impactoTotal}</p>
-        <p>Esfuerzo Total: {esfuerzoTotal}</p>
+        <p>Impacto Total: {impactoTotal} ({porcentajeImpacto}%)</p>
+        <p>Esfuerzo Total: {esfuerzoTotal} ({porcentajeEsfuerzo}%)</p>
       </div>
     </div>
   );

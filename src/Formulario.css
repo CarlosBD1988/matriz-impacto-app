@@ -86,4 +86,10 @@ body {
   button:hover {
     background-color: #c9302c; /* Color más oscuro al pasar el mouse */
   }
+
+  .textarea-idea {
+    width: 100%; /* O el ancho que desees, como '500px' */
+    height: 100px; /* Ajusta la altura según lo necesites */
+    resize: vertical; /* Permite al usuario cambiar el tamaño verticalmente */
+  }
   
