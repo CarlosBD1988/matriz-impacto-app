@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './Formulario.css'; // Importa el archivo CSS
+import Cuadrante from './Cuadrante'; // Asegúrate de importar el nuevo componente
+
 
 function Formulario() {
   // Definimos las preguntas en un arreglo
@@ -107,7 +109,17 @@ function Formulario() {
       const porcentajeImpacto = ((impactoTotal / maxImpacto) * 100).toFixed(2);
       const porcentajeEsfuerzo = ((esfuerzoTotal / maxEsfuerzo) * 100).toFixed(2);
 
-
+      const determinarCuadrante = () => {
+        if (porcentajeEsfuerzo > 50 && porcentajeImpacto > 50) {
+          return { color: 'amarrillo', titulo: 'Ganancia Rápida', descripcion: `Esfuerzo: ${porcentajeEsfuerzo}%, Impacto: ${porcentajeImpacto}%` };
+        } else if (porcentajeEsfuerzo <= 50 && porcentajeImpacto > 50) {
+          return { color: 'verde', titulo: 'Oportunidades', descripcion: `Esfuerzo: ${porcentajeEsfuerzo}%, Impacto: ${porcentajeImpacto}%` };
+        } else if (porcentajeEsfuerzo <= 50 && porcentajeImpacto <= 50) {
+          return { color: 'naranja', titulo: 'Menor Ganancia', descripcion: `Esfuerzo: ${porcentajeEsfuerzo}%, Impacto: ${porcentajeImpacto}%` };
+        } else {
+          return { color: 'rojo', titulo: 'Descartar', descripcion: `Esfuerzo: ${porcentajeEsfuerzo}%, Impacto: ${porcentajeImpacto}%` };
+        }
+      };
 
 
 
@@ -120,6 +132,7 @@ const handleReset = () => {
     setIdea(''); // Limpiar la idea también
   };
 
+  const cuadrante = determinarCuadrante();
 
   return (
     <div>      
@@ -170,6 +183,9 @@ const handleReset = () => {
         <p>Impacto Total: {impactoTotal} ({porcentajeImpacto}%)</p>
         <p>Esfuerzo Total: {esfuerzoTotal} ({porcentajeEsfuerzo}%)</p>
       </div>
+
+      {/* Mostrar el cuadrante */}
+      <Cuadrante color={cuadrante.color} titulo={cuadrante.titulo} descripcion={cuadrante.descripcion} />
     </div>
   );
 }
