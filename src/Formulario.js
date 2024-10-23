@@ -178,12 +178,24 @@ function Formulario() {
         timestamp: new Date(),
       });
       console.log("Documento escrito con ID: ", docRef.id);
-      alert("Registro guardado exitosamente."); 
+      
+      Swal.fire({
+        title: '¡Guardado!',
+        text: 'La evaluación ha sido guardada correctamente.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+
       // Opcional: puedes limpiar el formulario después de guardar
       handleReset();
     } catch (e) {
-      console.error("Error añadiendo documento: ", e);
-      alert("Error al guardar el registro. Intenta nuevamente.");
+      console.error("Error añadiendo documento: ", e);      
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al guardar la evaluación.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
   };
   
