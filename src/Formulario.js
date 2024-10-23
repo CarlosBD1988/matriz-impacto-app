@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
+
 import './Formulario.css'; // Importa el archivo CSS
 import Cuadrante from './Cuadrante'; // Asegúrate de importar el nuevo componente
 
@@ -125,16 +127,31 @@ function Formulario() {
         }
       };
 
-
-
-  
-// Función para limpiar las respuestas
-const handleReset = () => {
-    setSelecciones({});
-    setImpactoTotal(0);
-    setEsfuerzoTotal(0);
-    setIdea(''); // Limpiar la idea también
-  };
+      // Función para limpiar las respuestas
+      const handleReset = () => {
+        Swal.fire({
+          title: '¿Estás seguro?',
+          text: "¡Esto limpiará todas las respuestas!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí, limpiar',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setSelecciones({});
+            setImpactoTotal(0);
+            setEsfuerzoTotal(0);
+            setIdea(''); // Limpiar la idea también
+            Swal.fire(
+              '¡Limpio!',
+              'Las respuestas han sido limpiadas.',
+              'success'
+            );
+          }
+        });
+      };   
 
   const cuadrante = determinarCuadrante();
 
