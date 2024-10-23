@@ -3,6 +3,10 @@ import './Formulario.css'; // Importa el archivo CSS
 import Cuadrante from './Cuadrante'; // Asegúrate de importar el nuevo componente
 
 
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from './firebase';
+
+
 function Formulario() {
   // Definimos las preguntas en un arreglo
   const preguntas = [
@@ -135,11 +139,37 @@ const handleReset = () => {
   const cuadrante = determinarCuadrante();
 
 
-
-  const handleSave = () => {
-
-  }
-
+  const handleSave = async () => {
+    try {
+      const docRef = await addDoc(collection(db, 'evaluaciones'), {
+        idea,
+        selecciones: Object.fromEntries(
+          Object.entries(selecciones).map(([preguntaId, opcion]) => [
+            preguntaId,
+            { texto: opcion.texto, impacto: opcion.impacto, esfuerzo: opcion.esfuerzo }
+          ])
+        ),
+        impactoTotal,
+        esfuerzoTotal,
+        porcentajeImpacto,
+        porcentajeEsfuerzo,
+        cuadrante: {
+          color: cuadrante.color,
+          titulo: cuadrante.titulo,
+          descripcion: cuadrante.descripcion,
+        },
+        timestamp: new Date(),
+      });
+      console.log("Documento escrito con ID: ", docRef.id);
+      alert("Registro guardado exitosamente."); 
+      // Opcional: puedes limpiar el formulario después de guardar
+      handleReset();
+    } catch (e) {
+      console.error("Error añadiendo documento: ", e);
+      alert("Error al guardar el registro. Intenta nuevamente.");
+    }
+  };
+  
 
 
 
