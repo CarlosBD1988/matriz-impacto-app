@@ -8,12 +8,9 @@ import Inicio from './Inicio';
 function App() {
   return (
     <Router>
-      <Routes>
-        {/* Ruta por defecto que cargará el componente Inicio */}
-        <Route path="/" element={<Inicio />} />
-        {/* Ruta para el componente Formulario */}
-        <Route path="/formulario" element={<Formulario />} />
-        {/* Ruta para el componente Ver Histórico (aún por crear) */}
+      <Routes>        
+        <Route path="/" element={<Inicio />} />        
+        <Route path="/formulario" element={<Formulario />} />     
         <Route path="/historico" element={<Historico />} />
       </Routes>
     </Router>
