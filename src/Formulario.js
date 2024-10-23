@@ -94,7 +94,6 @@ function Formulario() {
   };
 
   const calcularMaximos = () => {
-    // Función para limpiar las respuestas
         let maxImpacto = 0;
         let maxEsfuerzo = 0;
         preguntas.forEach(pregunta => {
@@ -105,6 +104,7 @@ function Formulario() {
         });
         return { maxImpacto, maxEsfuerzo };
       };
+
       const { maxImpacto, maxEsfuerzo } = calcularMaximos();
       const porcentajeImpacto = ((impactoTotal / maxImpacto) * 100).toFixed(2);
       const porcentajeEsfuerzo = ((esfuerzoTotal / maxEsfuerzo) * 100).toFixed(2);
@@ -133,6 +133,15 @@ const handleReset = () => {
   };
 
   const cuadrante = determinarCuadrante();
+
+
+
+  const handleSave = () => {
+
+  }
+
+
+
 
   return (
     <div>      
@@ -175,6 +184,8 @@ const handleReset = () => {
 
         {/* Botón para limpiar las respuestas */}
         <button type="button" onClick={handleReset}>Limpiar Respuestas</button>
+        <button type="button" onClick={handleSave}>Guardar en Base de Datos</button>
+
 
     </form>
       {/* Mostrar resultados */}

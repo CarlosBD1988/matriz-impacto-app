@@ -79,8 +79,9 @@ body {
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
+    transition: background-color 0.3s ease;    
+    margin-top: 10px; /* Añade espacio arriba */
+    margin-right: 10px; /* Espacio a la derecha */
   }
   
   button:hover {
@@ -91,5 +92,4 @@ body {
     width: 100%; /* O el ancho que desees, como '500px' */
     height: 100px; /* Ajusta la altura según lo necesites */
     resize: vertical; /* Permite al usuario cambiar el tamaño verticalmente */
-  }
-  
+  }  
