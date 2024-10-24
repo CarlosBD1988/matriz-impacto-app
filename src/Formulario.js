@@ -11,8 +11,7 @@ import { db } from './firebase';
 import { Link } from 'react-router-dom';
 
 function Formulario() {
-  // Definimos las preguntas en un arreglo
-  
+  // Definimos las preguntas en un arreglo 
 
   // Estado para almacenar las selecciones de todas las preguntas
   const [selecciones, setSelecciones] = useState({});
@@ -116,6 +115,21 @@ function Formulario() {
 
   const handleSave = async () => {
     try {
+      // Validar que el campo de idea no esté vacío
+  if (!idea.trim()) {
+    Swal.fire({
+      title: 'Campo vacío',
+      text: 'Por favor, escribe una idea antes de guardar.',
+      icon: 'warning',
+      confirmButtonText: 'OK'
+    });
+    return; // No continuar si el campo está vacío
+  }
+
+
+
+
+
       const docRef = await addDoc(collection(db, 'evaluaciones'), {
         idea,
         selecciones: Object.fromEntries(
