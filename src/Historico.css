@@ -1,5 +1,6 @@
 /* Historico.css */
 
+/* Estilos generales para pantallas grandes y medianas */
 .historico-container {
     margin: 20px auto;
     padding: 20px;
@@ -100,4 +101,50 @@
 .timestamp {
     color: #bbbbbb;
     font-size: 0.9rem;
+}
+
+/* Ajustes para pantallas pequeñas (móviles y tablets) */
+@media (max-width: 768px) {
+    .historico-container {
+        padding: 15px;
+        max-width: 100%;
+        margin: 10px auto;
+    }
+
+    .historico-title {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .historico-table th, .historico-table td {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+    }
+
+    .historico-pagination button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Ajustes para pantallas muy pequeñas (teléfonos pequeños) */
+@media (max-width: 480px) {
+    .historico-container {
+        padding: 10px;
+    }
+
+    .historico-title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .historico-table th, .historico-table td {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+    }
+
+    .historico-pagination button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
 }
