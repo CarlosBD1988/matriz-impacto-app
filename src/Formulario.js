@@ -7,7 +7,7 @@ import Cuadrante from './Cuadrante'; // Asegúrate de importar el nuevo componen
 
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from './firebase';
-
+import { Link } from 'react-router-dom';
 
 function Formulario() {
   // Definimos las preguntas en un arreglo
@@ -153,6 +153,16 @@ function Formulario() {
         });
       };   
 
+      const handleResetV2 = () => {
+        setSelecciones({});
+        setImpactoTotal(0);
+        setEsfuerzoTotal(0);
+        setIdea(''); 
+      };   
+
+
+
+
   const cuadrante = determinarCuadrante();
 
 
@@ -187,7 +197,7 @@ function Formulario() {
       });
 
       // Opcional: puedes limpiar el formulario después de guardar
-      handleReset();
+      handleResetV2();
     } catch (e) {
       console.error("Error añadiendo documento: ", e);      
       Swal.fire({
@@ -252,6 +262,13 @@ function Formulario() {
         <h3>Resultados Totales:</h3>
         <p>Impacto Total: {impactoTotal} ({porcentajeImpacto}%)</p>
         <p>Esfuerzo Total: {esfuerzoTotal} ({porcentajeEsfuerzo}%)</p>
+
+        <Link to="/historico">
+        <button>Ver Histórico</button>
+      </Link>
+
+
+
       </div>
 
       {/* Mostrar el cuadrante */}
