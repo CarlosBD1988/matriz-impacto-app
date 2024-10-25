@@ -9,6 +9,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     color: #ffffff;
+    overflow-x: auto; /* Habilitar scroll horizontal */
 }
 
 .historico-title {
@@ -22,6 +23,7 @@
 
 .historico-table {
     width: 100%;
+    min-width: 600px;
     border-collapse: collapse;
     margin-top: 20px;
 }
@@ -109,6 +111,11 @@
         padding: 15px;
         max-width: 100%;
         margin: 10px auto;
+    }
+    .historico-table {
+        width: auto; /* Permitir que la tabla crezca más allá del contenedor */
+        display: block;
+        overflow-x: auto; /* Habilitar scroll horizontal */
     }
 
     .historico-title {
