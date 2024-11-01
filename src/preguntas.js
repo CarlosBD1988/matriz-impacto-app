@@ -98,6 +98,26 @@ const preguntas = [
         { texto: "Tendrá un impacto leve en la escalabilidad.", impacto: 1, esfuerzo: 0 },
         { texto: "No afectará la escalabilidad del producto.", impacto: 0, esfuerzo: 4 },
       ],
+    },
+    {
+      id: 11,
+      texto: "¿Qué impacto financiero tiene la propuesta en términos de generación de ingresos?",
+      opciones: [
+        { texto: "Aumentará significativamente los ingresos", impacto: 3, esfuerzo: 0 },
+        { texto: "Aumentará moderadamente los ingresos.", impacto: 2, esfuerzo: 0 },
+        { texto: "Tendrá un impacto leve en los ingresos.", impacto: 1, esfuerzo: 0 },
+        { texto: "No afectará los ingresos.", impacto: 0, esfuerzo: 0 },
+      ],
+    },
+    {
+      id: 12,
+      texto: "¿A cuántos clientes o usuarios impacta? ¿Es una solución que puede escalar a más usuarios?",
+      opciones: [
+        { texto: "La solución impacta a un grupo muy pequeño de clientes o usuarios, generalmente nicho o altamente especializado.", impacto: 0, esfuerzo: 0 },
+        { texto: "La solución llega a un segmento reducido, con potencial para crecer, pero aún con alcance limitado.", impacto: 1, esfuerzo: 0 },
+        { texto: "La solución impacta a un segmento significativo del mercado, pero sigue estando concentrada en un grupo específico o un área geográfica.", impacto: 2, esfuerzo: 0 },
+        { texto: "La solución ya impacta a una base de usuarios considerable y tiene presencia en múltiples segmentos o regiones.", impacto: 3, esfuerzo: 0 },
+      ],
     }
     
   ];
