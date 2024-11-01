@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from './firebase'; // Asegúrate de importar la instancia de Firebase
+import { db } from '../../servicios/firebase'; // Asegúrate de importar la instancia de Firebase
 import './Historico.css'; // Si deseas añadir estilos personalizados
 
 function Historico() {

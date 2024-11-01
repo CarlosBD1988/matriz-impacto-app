@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
 import './Formulario.css'; 
-import Cuadrante from './Cuadrante'; 
-import preguntas from './preguntas'; 
+import Cuadrante from '../Cuadrante/Cuadrante'; 
+import preguntas from '../../servicios/preguntas'; 
 
 
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from './firebase';
+import { db } from '../../servicios/firebase';
 import { Link } from 'react-router-dom';
 
 function Formulario() {
@@ -116,20 +116,16 @@ function Formulario() {
   const handleSave = async () => {
     try {
       // Validar que el campo de idea no esté vacío
-  if (!idea.trim()) {
+  if (!idea.trim()) 
+    {
     Swal.fire({
       title: 'Campo vacío',
       text: 'Por favor, escribe una idea antes de guardar.',
       icon: 'warning',
       confirmButtonText: 'OK'
     });
-    return; // No continuar si el campo está vacío
+    return;
   }
-
-
-
-
-
       const docRef = await addDoc(collection(db, 'evaluaciones'), {
         idea,
         selecciones: Object.fromEntries(

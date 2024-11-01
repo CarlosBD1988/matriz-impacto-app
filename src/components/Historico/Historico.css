@@ -113,9 +113,9 @@
         margin: 10px auto;
     }
     .historico-table {
-        width: auto; /* Permitir que la tabla crezca más allá del contenedor */
+        width: auto; 
         display: block;
-        overflow-x: auto; /* Habilitar scroll horizontal */
+        overflow-x: auto; 
     }
 
     .historico-title {
