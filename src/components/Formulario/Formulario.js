@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import Swal from 'sweetalert2';
 
 import './Formulario.css'; 
@@ -6,23 +6,39 @@ import Cuadrante from '../Cuadrante/Cuadrante';
 import preguntas from '../../servicios/preguntas'; 
 
 
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc ,getDocs } from 'firebase/firestore';
 import { db } from '../../servicios/firebase';
 import { Link } from 'react-router-dom';
 
 function Formulario() {
-  // Definimos las preguntas en un arreglo 
 
-  // Estado para almacenar las selecciones de todas las preguntas
   const [selecciones, setSelecciones] = useState({});
-
-  // Estado para almacenar el impacto y esfuerzo total
   const [impactoTotal, setImpactoTotal] = useState(0);
-  const [esfuerzoTotal, setEsfuerzoTotal] = useState(0);
+  const [esfuerzoTotal, setEsfuerzoTotal] = useState(0); 
+  //const [idea, setIdea] = useState('');
+  const [evaluador, setEvaluador] = useState('');
 
-  // Estado para la idea de desarrollo innovadora
-  // Función que se ejecuta cuando el usuario selecciona una opción
-  const [idea, setIdea] = useState('');
+  const [ideaId, setIdeaId] = useState('');
+  const [ideas, setIdeas] = useState([]);
+
+  useEffect(() => {
+    const cargarIdeas = async () => {
+      const ideasCollection = collection(db, 'ideas'); // Cambia 'ideas' al nombre de tu colección
+      const ideasSnapshot = await getDocs(ideasCollection);
+      const ideasList = ideasSnapshot.docs.map(doc => ({
+        id: doc.id,
+        texto: doc.data().idea // Suponiendo que cada documento tiene un campo 'texto'
+      }));
+      setIdeas(ideasList);
+    };
+    cargarIdeas();
+  }, []);
+
+
+
+
+
+
 
 
   // Función que se ejecuta cuando el usuario selecciona una opción
@@ -63,14 +79,14 @@ function Formulario() {
       const porcentajeEsfuerzo = ((esfuerzoTotal / maxEsfuerzo) * 100).toFixed(2);
 
       const determinarCuadrante = () => {
-        if (porcentajeEsfuerzo > 50 && porcentajeImpacto > 50) {
-          return { color: 'amarrillo', titulo: 'Ganancia Rápida', descripcion: `Esfuerzo: ${porcentajeEsfuerzo}%, Impacto: ${porcentajeImpacto}%` };
-        } else if (porcentajeEsfuerzo <= 50 && porcentajeImpacto > 50) {
-          return { color: 'verde', titulo: 'Oportunidades', descripcion: `Esfuerzo: ${porcentajeEsfuerzo}%, Impacto: ${porcentajeImpacto}%` };
+        if (porcentajeEsfuerzo <= 50 && porcentajeImpacto > 50) {
+          return { color: 'amarillo', titulo: 'Cuadrante #1 - Ganancia Rápida', descripcion: `Impacto Alto y Esfuerzo Bajo.` };
+        } else if (porcentajeEsfuerzo > 50 && porcentajeImpacto > 50) {
+          return { color: 'verde', titulo: 'Cuadrante #2 - Oportunidades', descripcion: `Impacto Alto y Esfuerzo Alto` };
         } else if (porcentajeEsfuerzo <= 50 && porcentajeImpacto <= 50) {
-          return { color: 'naranja', titulo: 'Menor Ganancia', descripcion: `Esfuerzo: ${porcentajeEsfuerzo}%, Impacto: ${porcentajeImpacto}%` };
+          return { color: 'naranja', titulo: 'Cuadrante #3 - Menor Ganancia', descripcion: ` Impacto Bajo y Esfuerzo Bajo` };
         } else {
-          return { color: 'rojo', titulo: 'Descartar', descripcion: `Esfuerzo: ${porcentajeEsfuerzo}%, Impacto: ${porcentajeImpacto}%` };
+          return { color: 'rojo', titulo: 'Cuadrante #4 - Descartar', descripcion: `Impacto Bajo y Esfuerzo Alto` };
         }
       };
 
@@ -90,7 +106,9 @@ function Formulario() {
             setSelecciones({});
             setImpactoTotal(0);
             setEsfuerzoTotal(0);
-            setIdea(''); // Limpiar la idea también
+            setEvaluador('');
+            //setIdea(''); // Limpiar la idea también
+            setIdeaId("");
             Swal.fire(
               '¡Limpio!',
               'Las respuestas han sido limpiadas.',
@@ -104,7 +122,9 @@ function Formulario() {
         setSelecciones({});
         setImpactoTotal(0);
         setEsfuerzoTotal(0);
-        setIdea(''); 
+        //setIdea(''); 
+        setEvaluador('');
+        setIdeaId("");
       };   
 
 
@@ -116,18 +136,30 @@ function Formulario() {
   const handleSave = async () => {
     try {
       // Validar que el campo de idea no esté vacío
-  if (!idea.trim()) 
+  if (!ideaId.trim()) 
     {
     Swal.fire({
       title: 'Campo vacío',
-      text: 'Por favor, escribe una idea antes de guardar.',
+      text: 'Por favor, selecciona una idea antes de guardar.',
       icon: 'warning',
       confirmButtonText: 'OK'
     });
     return;
   }
+  else if(!evaluador.trim())
+    {
+      Swal.fire({
+        title: 'Campo vacío',
+        text: 'Por favor, escribe tu nombre antes de guardar.',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
+      return;
+    
+    }
       const docRef = await addDoc(collection(db, 'evaluaciones'), {
-        idea,
+        evaluador,
+        ideaId,
         selecciones: Object.fromEntries(
           Object.entries(selecciones).map(([preguntaId, opcion]) => [
             preguntaId,
@@ -174,8 +206,30 @@ function Formulario() {
     <div>      
       <h2>Formulario de Evaluación de Idea de Negocio</h2>
       <form>  
+         {/* Campo de selección para la idea de desarrollo innovadora */}
+      <div>
+          <label htmlFor="idea">Selecciona una idea de desarrollo innovadora:</label>
+          <select
+            id="idea"
+            value={ideaId}
+            onChange={(e) => setIdeaId(e.target.value)}
+          >
+            <option value="">Selecciona una idea...</option>
+            {ideas.map((idea) => (
+              <option key={idea.id} value={idea.id}>
+                {idea.texto}
+              </option>
+            ))}
+          </select>
+      </div>
 
-        {/* Campo de texto para la idea de desarrollo innovadora */}
+      <div>
+          <label htmlFor="evaluador">Nombre del evaluador:</label>
+          <input id="evaluador" className="input-profesional" value={evaluador} onChange={(e) => setEvaluador(e.target.value)} placeholder="Evaluador"
+          />
+      </div>
+      
+      {/* Campo de texto para la idea de desarrollo innovadora 
        <div>
           <label htmlFor="idea">Idea de desarrollo innovadora:</label>
           <textarea
@@ -186,7 +240,7 @@ function Formulario() {
             placeholder="Escribe tu idea aquí..."
           />
         </div>
-
+      */} 
 
       {/* Mapeamos sobre el arreglo de preguntas para renderizarlas */}
       {preguntas.map((pregunta) => (
@@ -217,16 +271,13 @@ function Formulario() {
     </form>
       {/* Mostrar resultados */}
       <div className="resultados">
-        <h3>Resultados Totales:</h3>
-        <p>Impacto Total: {impactoTotal} ({porcentajeImpacto}%)</p>
-        <p>Esfuerzo Total: {esfuerzoTotal} ({porcentajeEsfuerzo}%)</p>
+          <h3>Resultados Totales:</h3>
+          <p>Impacto Total: {impactoTotal} ({porcentajeImpacto}%)</p>
+          <p>Esfuerzo Total: {esfuerzoTotal} ({porcentajeEsfuerzo}%)</p>
 
-        <Link to="/historico">
-        <button>Ver Histórico</button>
-      </Link>
-
-
-
+          <Link to="/consolidado">
+          <button>Ver Consolidados</button>
+          </Link>
       </div>
 
       {/* Mostrar el cuadrante */}

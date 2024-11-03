@@ -96,7 +96,7 @@ const preguntas = [
         { texto: "Aumentará significativamente la escalabilidad del producto.", impacto: 3, esfuerzo: 1 },
         { texto: "Aumentará moderadamente la escalabilidad.", impacto: 2, esfuerzo: 1 },
         { texto: "Tendrá un impacto leve en la escalabilidad.", impacto: 1, esfuerzo: 0 },
-        { texto: "No afectará la escalabilidad del producto.", impacto: 0, esfuerzo: 4 },
+        { texto: "No afectará la escalabilidad del producto.", impacto: 0, esfuerzo: 0 },
       ],
     },
     {

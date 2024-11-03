@@ -94,3 +94,62 @@ body {
     height: 100px; /* Ajusta la altura según lo necesites */
     resize: vertical; /* Permite al usuario cambiar el tamaño verticalmente */
   }  
+
+
+  .input-profesional {
+    width: 100%; /* Ancho completo */
+    padding: 12px 15px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    color: #333; /* Color del texto */
+    background-color: #fff; /* Fondo blanco */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transición suave para interacciones */
+  }
+  .input-profesional:focus {
+    border-color: #007BFF; /* Cambiar a azul al enfocar */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul al enfocar */
+    outline: none; /* Quitar el contorno por defecto */
+  }
+  .input-profesional.error {
+    border-color: #dc3545; /* Bordes rojos para errores */
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5); /* Sombra roja para errores */
+  }
+  .input-profesional-helper {
+    font-size: 12px; /* Tamaño de fuente más pequeño */
+    color: #6c757d; /* Color gris para el texto de ayuda */
+    margin-top: 5px; /* Margen superior */
+  }
+  .input-profesional-error {
+    font-size: 12px; /* Tamaño de fuente más pequeño */
+    color: #dc3545; /* Color rojo para errores */
+    margin-top: 5px; /* Margen superior */
+  }
+
+  select {
+    width: 100%; /* Ancho completo */
+    padding: 12px 15px; /* Espaciado interno */
+    margin: 10px 0; /* Margen superior e inferior */
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: #fff; /* Fondo blanco */
+    color: #333; /* Color del texto */
+    font-size: 16px; /* Tamaño de fuente */
+    appearance: none; /* Quitar el estilo por defecto del select */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20"><path fill="%23333" d="M5 8l5 5 5-5H5z"/></svg>'); /* Icono de flecha */
+    background-repeat: no-repeat; /* No repetir la imagen de fondo */
+    background-position: right 15px center; /* Posición de la imagen de fondo */
+    background-size: 15px; /* Tamaño de la imagen de fondo */
+    transition: border-color 0.3s ease; /* Transición suave para el borde */
+    max-width: 100%; /* Asegurar que no exceda el ancho de su contenedor */
+    overflow: hidden; /* Ocultar el desbordamiento */
+    white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+    text-overflow: ellipsis; /* Añadir puntos suspensivos si el texto es demasiado largo */
+}
+
+select option {
+  overflow: hidden; /* Ocultar el desbordamiento */
+  white-space: nowrap; /* Evitar que el texto de las opciones se divida */
+  text-overflow: ellipsis; /* Añadir puntos suspensivos si el texto es demasiado largo */
+}

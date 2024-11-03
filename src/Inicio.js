@@ -9,11 +9,13 @@ function Inicio() {
       <Link to="/idea">
           <button>Crear Idea a evaluar</button>
         </Link>
+        
         <Link to="/formulario">
           <button>Calcular Matriz</button>
         </Link>
-        <Link to="/historico">
-          <button>Ver Histórico</button>
+          
+        <Link to="/consolidado">
+          <button>Ver Consolidado de evaluaciones</button>
         </Link>        
       </div>
     </div>
