@@ -221,6 +221,9 @@ function Formulario() {
               </option>
             ))}
           </select>
+          <Link to="/idea">
+          <button>Crear Idea a evaluar</button>
+        </Link>
       </div>
 
       <div>
