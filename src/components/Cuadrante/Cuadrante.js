@@ -5,7 +5,7 @@ import './Cuadrante.css'; // Asegúrate de crear este archivo para los estilos
 const Cuadrante = ({ color, titulo, descripcion }) => {
   return (
     <div className={`cuadrante ${color}`}>
-      <h3>{titulo}</h3>
+      <h4>{titulo}</h4>
       <p>{descripcion}</p>
     </div>
   );
