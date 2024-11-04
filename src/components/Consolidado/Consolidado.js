@@ -1,7 +1,9 @@
 import React, { useState , useEffect} from 'react';
-import { collection,getDocs,query,where  } from 'firebase/firestore';
+import { collection,getDocs,query,where,deleteDoc,doc } from 'firebase/firestore';
 import { db } from '../../servicios/firebase';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 
 import preguntas from '../../servicios/preguntas'; 
 import Cuadrante from '../Cuadrante/Cuadrante'
@@ -71,7 +73,10 @@ function Consolidado() {
                     const evaluacionesCollection = collection(db, 'evaluaciones');
                     const q = query(evaluacionesCollection, where('ideaId', '==', ideaId));
                     const evaluacionesSnapshot = await getDocs(q);
-                    const evaluacionesList = evaluacionesSnapshot.docs.map(doc => doc.data());
+                    const evaluacionesList = evaluacionesSnapshot.docs.map(doc =>({
+                        ...doc.data(),
+                        id:doc.id
+                    }) );
                     setEvaluaciones(evaluacionesList);
 
                     // Calcular los totales y los porcentajes acumulados
@@ -124,9 +129,37 @@ function Consolidado() {
         }
     };
 
-    return (
+    const eliminarEvaluacion = async (evaluacionId) => {
+        const confirmacion = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción no se puede deshacer',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
 
-    <div>      
+        if (confirmacion.isConfirmed) {
+            try {
+                await deleteDoc(doc(db, 'evaluaciones', evaluacionId));
+                setEvaluaciones(evaluaciones.filter(evaluacion => evaluacion.id !== evaluacionId));
+                Swal.fire('Eliminado', 'La evaluación ha sido eliminada.', 'success');
+            } catch (error) {
+                console.error('Error al eliminar evaluación:', error);
+                Swal.fire('Error', 'No se pudo eliminar la evaluación.', 'error');
+            }
+        }
+    };
+
+
+
+
+
+
+
+
+    return (
+            <div>      
         <h2>Formulario de consulta de Ideas de Negocio</h2>
         <div>
             <label htmlFor="idea">Selecciona la idea a consultar:</label>
@@ -158,6 +191,7 @@ function Consolidado() {
                             <th>% Impacto</th>
                             <th>% Esfuerzo</th>
                             <th>Cuadrante</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -169,6 +203,9 @@ function Consolidado() {
                                 <td>{evaluacion.porcentajeImpacto}%</td>
                                 <td>{evaluacion.porcentajeEsfuerzo}%</td>
                                 <td>{evaluacion.cuadrante.titulo}</td>
+                                <td>
+                                    <button onClick={()=>eliminarEvaluacion(evaluacion.id)}>Eliminar</button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
