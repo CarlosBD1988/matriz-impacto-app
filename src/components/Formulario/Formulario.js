@@ -255,7 +255,7 @@ function Formulario() {
                 <input
                   type="radio"
                   name={`pregunta${pregunta.id}`}
-                  checked={selecciones[pregunta.id]?.impacto === opcion.impacto}
+                  checked={selecciones[pregunta.id]?.optionId === opcion.optionId}
                   onChange={() => handleSelect(pregunta.id, opcion)}
                 />
                 {opcion.texto}
